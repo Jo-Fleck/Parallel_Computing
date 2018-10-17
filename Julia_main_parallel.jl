@@ -12,7 +12,7 @@ using SharedArrays
 #--------------------------------#
 
 # Number of cores/workers
-addprocs(5)
+addprocs(4)
 
 # Grid for x
 @everywhere nx  = 1500;
@@ -53,16 +53,16 @@ tempV = SharedArray{Float64}(ne*nx)
 #--------------------------------#
 
 # Grid for capital (x)
-size = nx;
-xstep = (xmax - xmin) /(size - 1);
+size_cap = nx;
+xstep = (xmax - xmin) /(size_cap - 1);
 for i = 1:nx
   xgrid[i] = xmin + (i-1)*xstep;
 end
 
 # Grid for productivity (e) with Tauchen (1986)
-size = ne;
+size_pr = ne;
 ssigma_y = sqrt((ssigma_eps^2) / (1 - (llambda_eps^2)));
-estep = 2*ssigma_y*m / (size-1);
+estep = 2*ssigma_y*m / (size_pr-1);
 for i = 1:ne
   egrid[i] = (-m*sqrt((ssigma_eps^2) / (1 - (llambda_eps^2))) + (i-1)*estep);
 end
